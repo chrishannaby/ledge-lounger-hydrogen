@@ -68,9 +68,7 @@ export async function loader({request, context}: LoaderArgs) {
     'User-Agent': 'Hydrogen',
   });
 
-  const response = await fetch(url + pathname + search, {
-    headers: customHeaders,
-  });
+  const response = await fetch(url + pathname + search, request);
 
   const data = await response.text();
 
