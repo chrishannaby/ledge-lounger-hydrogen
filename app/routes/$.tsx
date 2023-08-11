@@ -29,7 +29,12 @@ export async function action({context, request}: ActionArgs) {
   const {pathname, search} = new URL(request.url);
   const newUrl = url + pathname + search;
 
-  const newRequest = new Request(newUrl, request);
+  const newRequest = new Request(
+    newUrl,
+    new Request(request, {
+      redirect: 'manual',
+    }),
+  );
   try {
     return await fetch(newRequest);
   } catch (e: any) {
@@ -61,14 +66,12 @@ export async function loader({request, context}: LoaderArgs) {
 
   const {origin, pathname, search} = new URL(request.url);
 
-  const customHeaders = new Headers({
-    'X-Shopify-Client-IP': request.headers.get('X-Shopify-Client-IP') || '',
-    'X-Shopify-Client-IP-Sig':
-      request.headers.get('X-Shopify-Client-IP-Sig') || '',
-    'User-Agent': 'Hydrogen',
-  });
-
-  const response = await fetch(url + pathname + search, request);
+  const response = await fetch(
+    url + pathname + search,
+    new Request(request, {
+      redirect: 'manual',
+    }),
+  );
 
   const data = await response.text();
 
