@@ -41,6 +41,7 @@ function FeaturedCollection({
     <Link
       className="featured-collection"
       to={`/collections/${collection.handle}`}
+      reloadDocument
     >
       {image && (
         <div className="featured-collection-image">
@@ -69,6 +70,7 @@ function RecommendedProducts({
                   key={product.id}
                   className="recommended-product"
                   to={`/products/${product.handle}`}
+                  reloadDocument
                 >
                   <Image
                     data={product.images.nodes[0]}
