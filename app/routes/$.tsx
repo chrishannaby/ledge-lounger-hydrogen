@@ -30,7 +30,13 @@ export async function action({context, request}: ActionArgs) {
   const newUrl = url + pathname + search;
 
   const newRequest = new Request(newUrl, request);
-  return await fetch(newRequest);
+  try {
+    return await fetch(newRequest);
+  } catch (e: any) {
+    return new Response(JSON.stringify({error: e.message}), {
+      status: 500,
+    });
+  }
 }
 
 export async function loader({request, context}: LoaderArgs) {
