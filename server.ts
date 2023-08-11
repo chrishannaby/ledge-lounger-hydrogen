@@ -70,6 +70,7 @@ export default {
       const handleRequest = createRequestHandler({
         build: remixBuild,
         mode: process.env.NODE_ENV,
+        poweredByHeader: false,
         getLoadContext: () => ({session, storefront, env, cart}),
       });
 
