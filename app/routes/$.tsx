@@ -29,15 +29,7 @@ export async function action({context, request}: ActionArgs) {
   const {pathname, search} = new URL(request.url);
   const newUrl = url + pathname + search;
 
-  const newHeaders = new Headers({
-    ...request.headers,
-    'X-Shopify-Client-IP': request.headers.get('X-Shopify-Client-IP') || '',
-    'X-Shopify-Client-IP-Sig':
-      request.headers.get('X-Shopify-Client-IP-Sig') || '',
-    'User-Agent': 'Hydrogen',
-  });
-
-  const newRequest = new Request(newUrl, {headers: newHeaders});
+  const newRequest = new Request(newUrl, request);
   return await fetch(newRequest);
 }
 
